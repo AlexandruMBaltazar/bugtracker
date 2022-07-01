@@ -14,15 +14,15 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity
+@Entity(name = "app_users")
 public class AppUser {
     @Id
     @SequenceGenerator(
-            name = "app_user_id_sequence",
-            sequenceName = "app_user_id_sequence"
+            name = "app_users_id_sequence",
+            sequenceName = "app_users_id_sequence"
     )
     @Column(nullable = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "app_user_id_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "app_users_id_sequence")
     private Long id;
     @NotBlank
     @Column(nullable = false)
@@ -40,13 +40,17 @@ public class AppUser {
     @Column(nullable = false)
     private String password;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany(
+            fetch = FetchType.EAGER,
+            cascade = {
+                    CascadeType.MERGE,
+            })
     @JoinTable(name = "app_user_roles",
             joinColumns = @JoinColumn(name = "app_user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new LinkedHashSet<>();
 
-    public void addRole (Role role) {
-            roles.add(role);
+    public void addRole(Role role) {
+        roles.add(role);
     }
 }

@@ -11,16 +11,16 @@ import java.util.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity
+@Entity(name = "roles")
 public class Role {
     @Id
     @SequenceGenerator(
-            name = "role_id_sequence",
-            sequenceName = "role_id_sequence"
+            name = "roles_id_sequence",
+            sequenceName = "roles_id_sequence"
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "role_id_sequence"
+            generator = "roles_id_sequence"
     )
     private Long id;
 

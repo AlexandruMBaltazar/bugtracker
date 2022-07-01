@@ -24,7 +24,7 @@ public class UserSeeder implements CommandLineRunner {
     private AppUserRepository appUserRepository;
     @Autowired
     private RoleRepository roleRepository;
-    private Faker faker = new Faker();
+    private final Faker faker = new Faker();
 
     @Override
     public void run(String... args) throws Exception {
@@ -34,7 +34,7 @@ public class UserSeeder implements CommandLineRunner {
     private void loadUserData() {
         if (appUserRepository.count() == 0) {
 
-            roleRepository.findAll().stream().forEach(role -> {
+            roleRepository.findAll().forEach(role -> {
                 AppUser appUser = AppUser.builder()
                         .firstName(faker.name().firstName())
                         .lastName(faker.name().lastName())
