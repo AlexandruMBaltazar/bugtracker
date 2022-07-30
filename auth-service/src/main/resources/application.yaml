@@ -1,33 +1,10 @@
 server:
-  port: 9092
-  max-http-header-size: 209715200
-  tomcat:
-    accept-count: 200
-    max-connections: 200
-    max-http-form-post-size: 200
+  port: 8081
 spring:
   application:
     name: auth-service
-  servlet:
-    multipart:
-      max-file-size: 10000
-      max-request-size: 10000
-      file-size-threshold: 250
   zipkin:
     base-url: http://localhost:9411
-  cloud:
-    gateway:
-      routes:
-        - id: user-service
-          uri: lb://user-service
-          predicates:
-            - Path=/api/v1/users/**
-        - id: auth-service
-          uri: lb://auth-service
-          predicates:
-            - Path=/**
-  main:
-    allow-bean-definition-overriding: true
 eureka:
   client:
     service-url:

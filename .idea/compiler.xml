@@ -11,6 +11,7 @@
         <module name="auth-service" />
         <module name="eureka-server" />
         <module name="user-server" />
+        <module name="gateway-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
