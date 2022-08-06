@@ -13,6 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 )
 public interface AppUserClient {
 
-    @GetMapping(path = "api/v1/fetch-user/{email}")
+    @GetMapping(path = "api/v1/users/fetch-user/{email}")
     ResponseEntity<AppUserAuthenticationResponseDto> getAppUserByEmail(@PathVariable("email") String email);
 }

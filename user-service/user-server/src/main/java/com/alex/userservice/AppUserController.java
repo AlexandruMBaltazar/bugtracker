@@ -1,6 +1,5 @@
 package com.alex.userservice;
 import com.alex.userservice.clients.appuser.dto.response.AppUserAuthenticationResponseDto;
-import com.alex.userservice.clients.appuser.dto.response.AppUserResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

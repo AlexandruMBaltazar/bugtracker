@@ -12,7 +12,7 @@
     <module>eureka-server</module>
     <module>auth-service</module>
     <module>user-service</module>
-      <module>gateway-service</module>
+    <module>gateway-service</module>
       <!--    <module>user-service/user-client</module>-->
 <!--    <module>user-service/user-server</module>-->
   </modules>
