@@ -2,10 +2,7 @@ package com.alex.userservice.role;
 
 import com.alex.userservice.AppUser;
 import com.alex.userservice.clients.role.dto.ERole;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.Hibernate;
 import javax.persistence.*;
 import java.util.LinkedHashSet;
@@ -16,6 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 @Entity(name = "roles")
 public class Role {
     @Id

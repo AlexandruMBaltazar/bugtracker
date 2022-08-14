@@ -1,7 +1,7 @@
 package com.alex.authservice.security;
 
 import com.alex.userservice.clients.appuser.AppUserClient;
-import com.alex.userservice.clients.appuser.dto.response.AppUserAuthenticationResponseDto;
+import com.alex.userservice.clients.appuser.dto.AppUserDto;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        AppUserAuthenticationResponseDto appUserDto;
+        AppUserDto appUserDto;
 
         try {
             appUserDto = appUserClient
