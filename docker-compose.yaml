@@ -35,6 +35,56 @@ services:
       - "9411:9411"
     networks:
       - spring
+  eureka-server:
+    image: alexandrubaltazar/eureka-server:latest
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+    depends_on:
+      - zipkin
+  gateway-service:
+    image: alexandrubaltazar/gateway-service:latest
+    container_name: gateway-service
+    ports:
+      - "9092:9092"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+    depends_on:
+      - zipkin
+      - eureka-server
+  auth-server:
+    image: alexandrubaltazar/auth-server:latest
+    container_name: auth-server
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+    depends_on:
+      - postgres
+      - zipkin
+      - eureka-server
+  user-server:
+    image: alexandrubaltazar/user-server:latest
+    container_name: user-server
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - postgres
+      - spring
+    depends_on:
+      - postgres
+      - zipkin
+      - eureka-server
 networks:
   postgres:
     driver: bridge

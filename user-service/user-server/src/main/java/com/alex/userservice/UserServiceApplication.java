@@ -7,7 +7,12 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 
-@SpringBootApplication
+@SpringBootApplication(
+        scanBasePackages = {
+                "com.alex.userservice.clients",
+                "com.alex.userservice"
+        }
+)
 @EnableEurekaClient
 @PropertySources({
         @PropertySource("classpath:clients-${spring.profiles.active}.properties")
