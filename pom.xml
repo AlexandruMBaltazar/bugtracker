@@ -13,6 +13,7 @@
     <module>auth-service</module>
     <module>user-service</module>
     <module>gateway-service</module>
+      <module>company-service</module>
   </modules>
 
   <name>bugtracker</name>

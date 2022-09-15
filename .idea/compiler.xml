@@ -8,11 +8,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="auth-client" />
-        <module name="user-client" />
-        <module name="eureka-server" />
+        <module name="company-client" />
         <module name="user-server" />
         <module name="gateway-service" />
         <module name="auth-server" />
+        <module name="user-client" />
+        <module name="company-server" />
+        <module name="eureka-server" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

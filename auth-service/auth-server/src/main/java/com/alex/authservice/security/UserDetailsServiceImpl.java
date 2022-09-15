@@ -1,7 +1,8 @@
 package com.alex.authservice.security;
 
 import com.alex.userservice.clients.appuser.AppUserClient;
-import com.alex.userservice.clients.appuser.dto.AppUserDto;
+import com.alex.userservice.clients.appuser.dto.response.AppUserAuthResponseDto;
+import com.alex.userservice.clients.appuser.dto.response.AppUserResponseDto;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,10 +25,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        AppUserDto appUserDto;
+        AppUserAuthResponseDto appUserAuthResponseDto;
 
         try {
-            appUserDto = appUserClient
+            appUserAuthResponseDto = appUserClient
                     .getAppUserByEmail(username)
                     .getBody();
             log.info("User found in the database: {}", username);
@@ -36,12 +37,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("User not found");
         }
 
-        Collection<SimpleGrantedAuthority> authorities = appUserDto
+        Collection<SimpleGrantedAuthority> authorities = appUserAuthResponseDto
                 .getRoles()
                 .stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName().name()))
                 .collect(Collectors.toSet());
 
-        return new User(appUserDto.getEmail(), appUserDto.getPassword(), authorities);
+        return new User(appUserAuthResponseDto.getEmail(), appUserAuthResponseDto.getPassword(), authorities);
     }
 }

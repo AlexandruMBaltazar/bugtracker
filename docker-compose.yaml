@@ -1,5 +1,16 @@
 version: "3.3"
 services:
+  jenkins:
+    image: jenkins/jenkins:alpine-jdk11
+    privileged: true
+    user: root
+    ports:
+      - "9090:8080"
+      - "50000:50000"
+    container_name: jenkins
+    volumes:
+      - /home/alex/jenkins_compose/jenkins_configuration:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
   postgres:
     container_name: postgres
     image: postgres

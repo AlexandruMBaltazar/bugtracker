@@ -1,0 +1,22 @@
+server:
+  port: 9092
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+  zipkin:
+    base-url: http://zipkin:9411
+  main:
+    allow-bean-definition-overriding: true
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+jwt:
+  secret: "secret"

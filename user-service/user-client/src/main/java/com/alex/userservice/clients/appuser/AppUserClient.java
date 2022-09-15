@@ -1,6 +1,7 @@
 package com.alex.userservice.clients.appuser;
 
-import com.alex.userservice.clients.appuser.dto.AppUserDto;
+import com.alex.userservice.clients.appuser.dto.response.AppUserAuthResponseDto;
+import com.alex.userservice.clients.appuser.dto.response.AppUserResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,5 +14,5 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface AppUserClient {
 
     @GetMapping(path = "api/v1/users/fetch-user/{email}")
-    ResponseEntity<AppUserDto> getAppUserByEmail(@PathVariable("email") String email);
+    ResponseEntity<AppUserAuthResponseDto> getAppUserByEmail(@PathVariable("email") String email);
 }

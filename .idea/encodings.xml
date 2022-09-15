@@ -11,6 +11,12 @@
     <file url="file://$PROJECT_DIR$/client/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/clients/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/clients/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/company-service/company-client/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/company-service/company-client/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/company-service/company-server/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/company-service/company-server/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/company-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/company-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eureka-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eureka-server/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gateway-service/src/main/java" charset="UTF-8" />

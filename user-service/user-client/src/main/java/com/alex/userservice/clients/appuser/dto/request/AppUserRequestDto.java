@@ -1,7 +1,5 @@
-package com.alex.userservice.clients.appuser.dto;
+package com.alex.userservice.clients.appuser.dto.request;
 
-import com.alex.userservice.clients.role.dto.response.RoleDto;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,13 +7,11 @@ import lombok.Setter;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import java.io.Serializable;
-import java.util.Set;
 
 @Data
 @Getter
 @Setter
-public class AppUserDto implements Serializable {
+public class AppUserRequestDto {
     private Long id;
 
     @NotBlank(message = "First name is required")
@@ -28,9 +24,6 @@ public class AppUserDto implements Serializable {
     @NotEmpty(message = "Email cannot be empty")
     private String email;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotBlank(message = "Password is required")
     private String password;
-
-    private Set<RoleDto> roles;
 }
