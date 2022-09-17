@@ -4,7 +4,7 @@ import groovy.lang.Binding
 def buildAll(command) {
     def mvn_version = 'Maven'
     withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
-        sh "mvn --no-transfer-progress clean install"
+        sh "make $command"
     }
 }
 
@@ -12,7 +12,7 @@ def runServiceStep(service, command) {
     dir("services/$service") {
         def mvn_version = 'Maven'
         withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
-            sh "mvn --no-transfer-progress clean install"
+            sh "make $command"
         }
     }
 }
