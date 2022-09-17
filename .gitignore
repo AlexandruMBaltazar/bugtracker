@@ -1,4 +1,10 @@
 # Project exclude paths
-/auth-service/target/
-/eureka-server/target/
 /user/target/
+/services/user-service/user-server/target/
+/services/user-service/user-client/target/
+/services/gateway-service/target/
+/services/eureka-server/target/
+/services/company-service/company-server/target/
+/services/company-service/company-client/target/
+/services/auth-service/auth-server/target/
+/services/auth-service/auth-client/target/
