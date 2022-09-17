@@ -2,7 +2,9 @@ properties([pipelineTriggers([pollSCM('* * * * *')])])
 
 node {
     checkout scm
-    
+    println("CURRENT JAVA VERSION: ")
+    sh "java --version"
+
     def analyzeChanges = load "$env.WORKSPACE/common/jenkins/analyzeChanges.groovy"
 
     def servicesToRun = analyzeChanges()
