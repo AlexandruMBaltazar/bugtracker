@@ -4,7 +4,7 @@ def runServiceStep(service, command) {
     dir("services/$service") {
         def mvn_version = 'Maven'
         withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
-            sh "mvn clean package"
+            sh "mvn --no-transfer-progress clean install"
         }
     }
 }
