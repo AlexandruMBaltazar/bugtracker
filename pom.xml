@@ -9,11 +9,11 @@
   <packaging>pom</packaging>
   <version>1.0-SNAPSHOT</version>
   <modules>
-    <module>eureka-server</module>
-    <module>auth-service</module>
-    <module>user-service</module>
-    <module>gateway-service</module>
-      <module>company-service</module>
+    <module>services/eureka-server</module>
+    <module>services/auth-service</module>
+    <module>services/user-service</module>
+    <module>services/gateway-service</module>
+    <module>services/company-service</module>
   </modules>
 
   <name>bugtracker</name>
