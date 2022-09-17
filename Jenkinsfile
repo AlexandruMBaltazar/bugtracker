@@ -1,5 +1,3 @@
-properties([pipelineTriggers([pollSCM('* * * * *')])])
-
 node {
     checkout scm
     println("CURRENT JAVA VERSION: ")
