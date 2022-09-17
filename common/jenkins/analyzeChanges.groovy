@@ -1,4 +1,5 @@
 import groovy.transform.Field
+final def config = load "$WORKSPACE/common/jenkins/config.groovy"
 
 def listFilesForBuild(build) {
   def files = []
