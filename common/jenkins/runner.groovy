@@ -2,8 +2,9 @@ import org.jenkinsci.plugins.pipeline.modeldefinition.Utils
 
 def runServiceStep(service, command) {
     dir("services/$service") {
-        withMaven {
-            sh "make $command"
+        def mvn_version = 'Maven'
+        withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
+            sh "mvn clean package"
         }
     }
 }
