@@ -1,7 +1,7 @@
 [
   [
     name    : 'Build',
-    command : 'mvn clean package',
+    command : 'mvn --no-transfer-progress clean install',
     shared  : false,
   ]
 ]
