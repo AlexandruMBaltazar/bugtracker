@@ -21,6 +21,7 @@ def runSharedStep(command) {
 }
 
 def execute(step, services) {
+    def availableServices = load "$env.WORKSPACE/common/jenkins/availableServices.groovy"
     if (services === availableServices() && step === "Build") {
         stage(step.name) {
             buildAll(step.command)

@@ -43,8 +43,9 @@ def changedServices(allServices, changedFiles, servicesFolder) {
 }
 
 return {
-    def allServices = availableServices()
-    def changedFiles = changedFilesSinceLastPass()
+  def availableServices = load "$env.WORKSPACE/common/jenkins/availableServices.groovy"
+  def allServices = availableServices()
+  def changedFiles = changedFilesSinceLastPass()
 
     shouldRunAll(changedFiles, config['runAllLocations']) ? allServices : changedServices(allServices, changedFiles, config['servicesFolder'])
 }

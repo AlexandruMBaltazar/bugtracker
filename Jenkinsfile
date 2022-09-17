@@ -8,7 +8,6 @@ node {
     def analyzeChanges = load "$env.WORKSPACE/common/jenkins/analyzeChanges.groovy"
 
     def servicesToRun = analyzeChanges()
-    println("AFTER SERVICES TO RUN")
 
     println("Running: $servicesToRun")
 
