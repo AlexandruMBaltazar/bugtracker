@@ -1,4 +1,5 @@
 import org.jenkinsci.plugins.pipeline.modeldefinition.Utils
+import groovy.lang.Binding
 
 def buildAll(command) {
     def mvn_version = 'Maven'
