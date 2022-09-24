@@ -1,18 +1,20 @@
 import org.jenkinsci.plugins.pipeline.modeldefinition.Utils
 import groovy.lang.Binding
 
-def buildAll(command) {
+def runForAllServices(command, step) {
     def mvn_version = 'Maven'
     withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
         sh "$command"
+        deploy(command, step)
     }
 }
 
-def runServiceStep(service, command) {
+def runForIndividualServices(service, command, step) {
     dir("services/$service") {
         def mvn_version = 'Maven'
         withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
             sh "$command"
+            deploy(command, step)
         }
     }
 }
@@ -21,18 +23,27 @@ def runSharedStep(command) {
     sh "make $command"
 }
 
+def deploy(command, step) {
+    if (env.BRANCH_NAME == "master" && step == "Deploy") {
+        withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+            sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+            sh "$command"
+        }
+    }
+}
+
 def execute(step, services) {
     def availableServices = load "$env.WORKSPACE/common/jenkins/availableServices.groovy"
-    if (services == availableServices() && step.name == "Build") {
+    if (services == availableServices()) {
         stage(step.name) {
-            buildAll(step.command)
+            runForAllServices(step.command, step.name)
         }
     } else {
         stage(step.name) {
             if (step.shared) {
                 runSharedStep(step.command)
             } else {
-                parallel services.collectEntries {service -> [service, {runServiceStep(service, step.command)}]}
+                parallel services.collectEntries {service -> [service, {runForIndividualServices(service, step.command, step.name)}]}
             }
         }
     }
