@@ -108,6 +108,10 @@
               </platforms>
             </from>
             <to>
+              <auth>
+                <username>${env.REGISTRY_USERNAME}</username>
+                <password>${env.REGISTRY_PASSWORD}</password>
+              </auth>
               <tags>
                 <tag>latest</tag>
               </tags>
