@@ -26,7 +26,7 @@ def runSharedStep(command) {
 def deploy(command, step) {
     if (env.BRANCH_NAME == "master" && step == "Deploy") {
         withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'REGISTRY_PASSWORD', usernameVariable: 'REGISTRY_USERNAME')]) {
-            sh "$command"
+            sh "$command'
         }
     }
 }
@@ -35,16 +35,10 @@ def execute(step, services) {
     def availableServices = load "$env.WORKSPACE/common/jenkins/availableServices.groovy"
     if (services == availableServices()) {
         stage(step.name) {
-            withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-                sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-            }
             runForAllServices(step.command, step.name)
         }
     } else {
         stage(step.name) {
-            withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-                sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-            }
             if (step.shared) {
                 runSharedStep(step.command)
             } else {
