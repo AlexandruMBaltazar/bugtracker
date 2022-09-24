@@ -25,7 +25,9 @@ def runSharedStep(command) {
 
 def deploy(command, step) {
     if (env.BRANCH_NAME == "master" && step == "Deploy") {
-        sh "$command"
+        withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'REGISTRY_PASSWORD', usernameVariable: 'REGISTRY_USERNAME')]) {
+            sh "$command"
+        }
     }
 }
 
