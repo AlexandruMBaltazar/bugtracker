@@ -29,14 +29,16 @@ def executions(command, step) {
     switch (step) {
         case "Deploy":
             if (env.BRANCH_NAME == "master") {
+                println "Executing $step from $env.BRANCH_NAME!"
                 sh "$command"
             }
             break
         case "Build":
+            println "Executing $step!"
             sh "$command"
             break
         default:
-            echo "Pipeline executed!"
+            println "$step Executed Successfully!"
             break
     }
 }
