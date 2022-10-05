@@ -1,7 +1,5 @@
 node {
     checkout scm
-    println("ENVIRONMENT: ")
-    sh 'printenv'
     println("CURRENT JAVA VERSION: ")
     sh "java --version"
 
@@ -15,6 +13,12 @@ node {
 
     def pipeline = load "$env.WORKSPACE/common/jenkins/pipeline.groovy"
     def runner = load "$env.WORKSPACE/common/jenkins/runner.groovy"
+    
+    def getGitBranchName() {
+        return scm.branches[0].name
+    }
+    
+    println getGitBranchName()
 
     println("Run Pipeline...")
     runner(servicesToRun, pipeline)    
