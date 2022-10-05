@@ -28,8 +28,8 @@ def runSharedStep(command) {
 def executions(command, step) {
     switch (step) {
         case "Deploy":
-            println "Executing $step from $env.GIT_BRANCH!"
-            if (env.GIT_BRANCH == "master") {
+            println "Executing $step!"
+            if (getGitBranchName() == "master") {
                 println "Executing $step from $env.GIT_BRANCH"
                 sh "$command"
             }
@@ -44,10 +44,18 @@ def executions(command, step) {
     }
 }
 
+def getGitBranchName() {
+    def branch_nem = scm.branches[0].name
+    if (branch_nem.contains("*/")) {
+        branch_nem = branch_nem.split("\\*/")[1]
+    }
+    return branch_nem
+}
+
 def execute(step, services) {
+    println "CURRENT BRANCH: "
+    println getGitBranchName()
     def availableServices = load "$env.WORKSPACE/common/jenkins/availableServices.groovy"
-    println "BRANCH NAME:"
-    println env.BRANCH_NAME
     if (services == availableServices()) {
         stage(step.name) {
             runForAllServices(step.command, step.name)
