@@ -1,6 +1,7 @@
 node {
     checkout scm
-    println("Branch: $env.GIT_BRANCH")
+    println("ENVIRONMENT: ")
+    sh 'printenv'
     println("CURRENT JAVA VERSION: ")
     sh "java --version"
 
