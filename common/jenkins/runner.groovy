@@ -3,14 +3,9 @@ import groovy.lang.Binding
 
 def runForAllServices(command, step) {
     def mvn_version = 'Maven'
-    if (env.BRANCH_NAME == "master" && step == "Deploy") {
-        authenticateToDocker()
-        withEnv(["PATH+MAVEN=${tool mvn_version}/bin"]) {
-            sh "$command"
-        }
-    } else {
-        withEnv(["PATH+MAVEN=${tool mvn_version}/bin"]) {
-            sh "$command"
+    withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'REGISTRY_PASSWORD', usernameVariable: 'REGISTRY_USERNAME')]) {
+        withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
+            executions(command, step)
         }
     }
 }
@@ -18,27 +13,29 @@ def runForAllServices(command, step) {
 def runForIndividualServices(service, command, step) {
     dir("services/$service") {
         def mvn_version = 'Maven'
-        if (env.BRANCH_NAME == "master" && step == "Deploy") {
-            authenticateToDocker()
-            withEnv(["PATH+MAVEN=${tool mvn_version}/bin"]) {
-                sh "$command"
-            }
-        } else {
-            withEnv(["PATH+MAVEN=${tool mvn_version}/bin"]) {
-                sh "$command"
+        withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'REGISTRY_PASSWORD', usernameVariable: 'REGISTRY_USERNAME')]) {
+            withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
+                executions(command, step)
             }
         }
     }
 }
 
-def authenticateToDocker() {
-    withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'REGISTRY_PASSWORD', usernameVariable: 'REGISTRY_USERNAME')]) {
-        sh "docker login -u ${env.REGISTRY_USERNAME} -p ${env.REGISTRY_PASSWORD}"
-    }
-}
-
 def runSharedStep(command) {
     sh "make $command"
+}
+
+def executions(command, step) {
+    switch (step) {
+        case "Deploy":
+            if (env.BRANCH_NAME == "master" && step == "Deploy") {
+                sh "$command"
+            }
+            break
+        default:
+            sh "$command"
+            break
+    }
 }
 
 def execute(step, services) {
