@@ -46,6 +46,8 @@ def executions(command, step) {
 
 def execute(step, services) {
     def availableServices = load "$env.WORKSPACE/common/jenkins/availableServices.groovy"
+    println "BRANCH NAME:"
+    println env.BRANCH_NAME
     if (services == availableServices()) {
         stage(step.name) {
             runForAllServices(step.command, step.name)
