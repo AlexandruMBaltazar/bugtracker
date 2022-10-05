@@ -28,12 +28,15 @@ def runSharedStep(command) {
 def executions(command, step) {
     switch (step) {
         case "Deploy":
-            if (env.BRANCH_NAME == "master" && step == "Deploy") {
+            if (env.BRANCH_NAME == "master") {
                 sh "$command"
             }
             break
-        default:
+        case "Build":
             sh "$command"
+            break
+        default:
+            echo "Pipeline executed!"
             break
     }
 }
