@@ -4,11 +4,9 @@ import groovy.lang.Binding
 def runForAllServices(command, step) {
     def mvn_version = 'Maven'
     if (env.BRANCH_NAME == "master" && step == "Deploy") {
-        withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'REGISTRY_PASSWORD', usernameVariable: 'REGISTRY_USERNAME')]) {
-            sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-            withEnv(["PATH+MAVEN=${tool mvn_version}/bin"]) {
-                sh "$command"
-            }
+        authenticateToDocker()
+        withEnv(["PATH+MAVEN=${tool mvn_version}/bin"]) {
+            sh "$command"
         }
     } else {
         withEnv(["PATH+MAVEN=${tool mvn_version}/bin"]) {
@@ -21,17 +19,21 @@ def runForIndividualServices(service, command, step) {
     dir("services/$service") {
         def mvn_version = 'Maven'
         if (env.BRANCH_NAME == "master" && step == "Deploy") {
-            withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'REGISTRY_PASSWORD', usernameVariable: 'REGISTRY_USERNAME')]) {
-                sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-                withEnv(["PATH+MAVEN=${tool mvn_version}/bin"]) {
-                    sh "$command"
-                }
+            authenticateToDocker()
+            withEnv(["PATH+MAVEN=${tool mvn_version}/bin"]) {
+                sh "$command"
             }
         } else {
             withEnv(["PATH+MAVEN=${tool mvn_version}/bin"]) {
                 sh "$command"
             }
         }
+    }
+}
+
+def authenticateToDocker() {
+    withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'REGISTRY_PASSWORD', usernameVariable: 'REGISTRY_USERNAME')]) {
+        sh "docker login -u ${env.REGISTRY_USERNAME} -p ${env.REGISTRY_PASSWORD}"
     }
 }
 
