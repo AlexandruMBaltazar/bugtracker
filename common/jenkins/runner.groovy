@@ -28,6 +28,7 @@ def runSharedStep(command) {
 def executions(command, step) {
     switch (step) {
         case "Deploy":
+            println "Executing $step from $env.BRANCH_NAME!"
             if (env.BRANCH_NAME == "master") {
                 println "Executing $step from $env.BRANCH_NAME!"
                 sh "$command"
