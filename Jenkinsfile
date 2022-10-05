@@ -13,13 +13,7 @@ node {
 
     def pipeline = load "$env.WORKSPACE/common/jenkins/pipeline.groovy"
     def runner = load "$env.WORKSPACE/common/jenkins/runner.groovy"
-    
-    println getGitBranchName()
 
     println("Run Pipeline...")
     runner(servicesToRun, pipeline)    
-}
-
-def getGitBranchName() {
-    return scm.branches[0].name
 }
