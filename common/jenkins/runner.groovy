@@ -5,7 +5,7 @@ def runForAllServices(command, step) {
     def mvn_version = 'Maven'
     withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'REGISTRY_PASSWORD', usernameVariable: 'REGISTRY_USERNAME')]) {
         withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
-            executions(command, step, env.BRANCH_NAME)
+            executions(command, step)
         }
     }
 }
@@ -15,7 +15,7 @@ def runForIndividualServices(service, command, step) {
         def mvn_version = 'Maven'
         withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'REGISTRY_PASSWORD', usernameVariable: 'REGISTRY_USERNAME')]) {
             withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
-                executions(command, step, env.BRANCH_NAME)
+                executions(command, step)
             }
         }
     }
@@ -25,12 +25,12 @@ def runSharedStep(command) {
     sh "make $command"
 }
 
-def executions(command, step, currentBranch) {
+def executions(command, step) {
     switch (step) {
         case "Deploy":
-            println "Executing $step from $currentBranch!"
-            if (currentBranch == "master") {
-                println "Executing $step from $currentBranch"
+            println "Executing $step from $env.GIT_BRANCH!"
+            if (env.GIT_BRANCH == "master") {
+                println "Executing $step from $env.GIT_BRANCH"
                 sh "$command"
             }
             break
