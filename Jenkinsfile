@@ -4,7 +4,7 @@ node {
         FULL_PATH_BRANCH = "${sh(script:'git name-rev --name-only HEAD', returnStdout: true)}"
         GIT_BRANCH = FULL_PATH_BRANCH.substring(FULL_PATH_BRANCH.lastIndexOf('/') + 1, FULL_PATH_BRANCH.length())
     }
-    println("Current Branch - $GIT_BRANCH")
+    println(GIT_BRANCH)
 
     println("CURRENT JAVA VERSION: ")
     sh "java --version"
