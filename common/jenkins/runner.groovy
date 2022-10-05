@@ -5,6 +5,7 @@ def runForAllServices(command, step) {
     def mvn_version = 'Maven'
     if (env.BRANCH_NAME == "master" && step == "Deploy") {
         withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'REGISTRY_PASSWORD', usernameVariable: 'REGISTRY_USERNAME')]) {
+            sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
             withEnv(["PATH+MAVEN=${tool mvn_version}/bin"]) {
                 sh "$command"
             }
@@ -21,6 +22,7 @@ def runForIndividualServices(service, command, step) {
         def mvn_version = 'Maven'
         if (env.BRANCH_NAME == "master" && step == "Deploy") {
             withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'REGISTRY_PASSWORD', usernameVariable: 'REGISTRY_USERNAME')]) {
+                sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
                 withEnv(["PATH+MAVEN=${tool mvn_version}/bin"]) {
                     sh "$command"
                 }
