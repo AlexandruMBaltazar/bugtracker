@@ -28,7 +28,7 @@ def getFilesChanged(chgSets) {
 def allChangeSetsFromLastSuccessfulBuild() {
   def job = Jenkins.instance.getItemByFullName(env.JOB_NAME)
   def lastSuccessBuild = job.lastSuccessfulBuild.number as int
-  def currentBuildId = "$BUILD_ID" as int
+  def currentBuildId = env.BUILD_ID as int
 
   def changeSets = []
 
