@@ -1,17 +1,37 @@
 import groovy.transform.Field
 final def config = load "$WORKSPACE/common/jenkins/config.groovy"
 
-def listFilesForBuild(build) {
-  def files = []
-  build.changeSets.each {
-    it.items.each {
-      it.affectedFiles.each {
-        files << it.path
+def getFilesChanged(chgSets) {
+  def filesList = []
+  def changeLogSets = chgSets
+  for (int i = 0; i < changeLogSets.size(); i++) {
+    def entries = changeLogSets[i].items
+    for (int j = 0; j < entries.length; j++) {
+      def entry = entries[j]
+      def files = new ArrayList(entry.affectedFiles)
+      for (int k = 0; k < files.size(); k++) {
+        def file = files[k]
+        filesList.add(file.path)
       }
     }
   }
+  return filesList
+}
 
-  files
+def allChangeSetsFromLastSuccessfulBuild() {
+  def job = Jenkins.instance.getItem("$JOB_NAME")
+  def lastSuccessBuild = job.lastSuccessfulBuild.number as int
+  def currentBuildId = "$BUILD_ID" as int
+
+  def changeSets = []
+
+  for(int i = lastSuccessBuild + 1; i < currentBuildId; i++) {
+    echo "Getting Change Set for the Build ID : ${i}"
+    def chageSet = job.getBuildByNumber(i).getChangeSets()
+    changeSets.addAll(chageSet)
+  }
+  changeSets.addAll(currentBuild.changeSets) // Add the current Changeset
+  return changeSets
 }
 
 def changedFilesSinceLastPass() {
@@ -26,9 +46,8 @@ def changedFilesSinceLastPass() {
   println "Fetching changed files since build: $lastSuccessfulBuildNumber"
 
   def build = currentBuild
-  println "Build: $build.changeSets"
   while (build.number > lastSuccessfulBuildNumber) {
-    files += listFilesForBuild(build)
+    files = getFilesChanged(allChangeSetsFromLastSuccessfulBuild())
     build = build.getPreviousBuild()
   }
   files.unique()
