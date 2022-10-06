@@ -10,7 +10,7 @@ def listFilesForBuild(build) {
       }
     }
   }
-  def currentBuild = build
+  def currentBuild = build.changeSets
   println "Build: $currentBuild"
   files
 }
