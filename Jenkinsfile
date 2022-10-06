@@ -1,6 +1,5 @@
 node {
     checkout scm
-    println("TEST TEST TEST")
     println("CURRENT JAVA VERSION: ")
     sh "java --version"
 
