@@ -1,16 +1,42 @@
+import jenkins.model.*;
+import hudson.model.*;
+import hudson.util.*;
+import hudson.tasks.*;
+import hudson.plugins.git.*;
+import hudson.scm.*
+import jenkins.scm.*
 import groovy.transform.Field
 final def config = load "$WORKSPACE/common/jenkins/config.groovy"
 
-def listFilesForBuild(build) {
-  def files = []
-  build.changeSets.each {
-    it.items.each {
-      it.affectedFiles.each {
-        files << it.path
+def getFilesChanged(chgSets) {
+  def filesList = []
+  def changeLogSets = chgSets
+  for (int i = 0; i < changeLogSets.size(); i++) {
+    def entries = changeLogSets[i].items
+    for (int j = 0; j < entries.length; j++) {
+      def entry = entries[j]
+      def files = new ArrayList(entry.affectedFiles)
+      for (int k = 0; k < files.size(); k++) {
+        def file = files[k]
+        filesList.add(file.path)
       }
     }
   }
-  files
+  return filesList
+}
+
+def allChangeSetsFromLastSuccessfulBuild() {
+  def job = Jenkins.instance.getItemByFullName(env.JOB_NAME)
+  def lastSuccessBuild = job.lastSuccessfulBuild.number as int
+  def currentBuildId = env.BUILD_ID as int
+
+  def changeSets = []
+
+  def chageSet = job.getBuildByNumber(lastSuccessBuild).getChangeSets()
+  changeSets.addAll(chageSet)
+
+  changeSets.addAll(currentBuild.changeSets) // Add the current Changeset
+  return changeSets
 }
 
 def changedFilesSinceLastPass() {
@@ -26,7 +52,7 @@ def changedFilesSinceLastPass() {
 
   def build = currentBuild
   while (build.number > lastSuccessfulBuildNumber) {
-    files += listFilesForBuild(build)
+    files = getFilesChanged(allChangeSetsFromLastSuccessfulBuild())
     build = build.getPreviousBuild()
   }
   files.unique()
