@@ -1,3 +1,10 @@
+import jenkins.model.*;
+import hudson.model.*;
+import hudson.util.*;
+import hudson.tasks.*;
+import hudson.plugins.git.*;
+import hudson.scm.*
+import jenkins.scm.*
 import groovy.transform.Field
 final def config = load "$WORKSPACE/common/jenkins/config.groovy"
 
