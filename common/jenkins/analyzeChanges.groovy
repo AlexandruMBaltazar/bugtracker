@@ -10,8 +10,7 @@ def listFilesForBuild(build) {
       }
     }
   }
-  def currentBuild = build.changeSets
-  println "Build: $currentBuild"
+
   files
 }
 
@@ -27,6 +26,7 @@ def changedFilesSinceLastPass() {
   println "Fetching changed files since build: $lastSuccessfulBuildNumber"
 
   def build = currentBuild
+  println "Build: $build.changeSets"
   while (build.number > lastSuccessfulBuildNumber) {
     files += listFilesForBuild(build)
     build = build.getPreviousBuild()
