@@ -10,7 +10,8 @@ def listFilesForBuild(build) {
       }
     }
   }
-  println "List of files for build: $files"
+  def currentBuild = build
+  println "Build: $currentBuild"
   files
 }
 
