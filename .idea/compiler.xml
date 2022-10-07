@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="auth-client" />
         <module name="company-client" />
+        <module name="exception-handler" />
         <module name="user-server" />
         <module name="gateway-service" />
         <module name="auth-server" />
@@ -20,6 +21,7 @@
     <bytecodeTargetLevel>
       <module name="client" target="17" />
       <module name="clients" target="17" />
+      <module name="global-exception-handling-service" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>

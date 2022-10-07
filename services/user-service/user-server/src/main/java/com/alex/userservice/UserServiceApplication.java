@@ -10,7 +10,8 @@ import org.springframework.context.annotation.PropertySources;
 @SpringBootApplication(
         scanBasePackages = {
                 "com.alex.userservice.clients",
-                "com.alex.userservice"
+                "com.alex.userservice",
+                "com.alex.exceptionhandler"
         }
 )
 @EnableEurekaClient

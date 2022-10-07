@@ -7,7 +7,8 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 @SpringBootApplication(
         scanBasePackages = {
                 "com.alex.companyservice.clients",
-                "com.alex.companyservice"
+                "com.alex.companyservice",
+                "com.alex.exceptionhandler"
         }
 )
 @EnableEurekaClient

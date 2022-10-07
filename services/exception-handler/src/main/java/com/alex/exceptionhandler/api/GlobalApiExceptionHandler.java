@@ -1,4 +1,5 @@
-package com.alex.userservice.exception;
+package com.alex.exceptionhandler.api;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +15,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
-public class UserGlobalExceptionHandler extends ResponseEntityExceptionHandler {
+public class GlobalApiExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value = {UserGlobalRequestException.class})
-    public ResponseEntity<Object> handleUserGlobalRequestException(UserGlobalRequestException exception) {
-        UserGlobalException userGlobalException = new UserGlobalException(
+    @ExceptionHandler(value = {GlobalApiRequestException.class})
+    public ResponseEntity<Object> handleUserGlobalRequestException(GlobalApiRequestException exception) {
+        GlobalApiException userGlobalException = new GlobalApiException(
                 exception.getMessage(),
                 exception.getHttpStatus(),
                 ZonedDateTime.now(ZoneId.of("Z")),
@@ -35,7 +36,7 @@ public class UserGlobalExceptionHandler extends ResponseEntityExceptionHandler {
         exception.getBindingResult().getFieldErrors()
                 .forEach(fieldError -> validationErrors.put(fieldError.getField(), fieldError.getDefaultMessage()));
 
-        UserGlobalException userGlobalException = new UserGlobalException(
+        GlobalApiException userGlobalException = new GlobalApiException(
                 exception.getMessage(),
                 HttpStatus.BAD_REQUEST,
                 ZonedDateTime.now(ZoneId.of("Z")),
@@ -44,5 +45,4 @@ public class UserGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(userGlobalException, HttpStatus.BAD_REQUEST);
     }
-
 }

@@ -1,10 +1,10 @@
 package com.alex.userservice;
+import com.alex.exceptionhandler.api.GlobalApiRequestException;
 import com.alex.userservice.clients.appuser.dto.request.AppUserRequestDto;
 import com.alex.userservice.clients.appuser.dto.response.AppUserAuthResponseDto;
 import com.alex.userservice.clients.appuser.dto.response.AppUserResponseDto;
 import com.alex.userservice.clients.role.dto.ERole;
-import com.alex.userservice.exception.UserGlobalErrorCode;
-import com.alex.userservice.exception.UserGlobalRequestException;
+import com.alex.userservice.exception.UserErrorCode;
 import com.alex.userservice.role.Role;
 import com.alex.userservice.role.RoleRepository;
 import com.alex.userservice.utility.MapperUtility;
@@ -34,8 +34,8 @@ public record AppUserService(
 
     public AppUserAuthResponseDto getAppUserByEmail(String email) {
         AppUser appUser = appUserRepository.findByEmail(email)
-                .orElseThrow(() -> new UserGlobalRequestException(
-                        UserGlobalErrorCode.ERROR_ENTITY_NOT_FOUND,
+                .orElseThrow(() -> new GlobalApiRequestException(
+                        UserErrorCode.ERROR_ENTITY_NOT_FOUND,
                         HttpStatus.BAD_REQUEST
                 ));
 

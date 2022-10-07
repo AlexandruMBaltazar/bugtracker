@@ -1,4 +1,5 @@
-package com.alex.userservice.exception;
+package com.alex.exceptionhandler.api;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.http.HttpStatus;
 
@@ -6,7 +7,7 @@ import java.time.ZonedDateTime;
 import java.util.Map;
 
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
-public record UserGlobalException(
+public record GlobalApiException(
         String message,
         HttpStatus httpStatus,
         ZonedDateTime timestamp,
